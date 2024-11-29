@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+  box-sizing: 0;
+  padding: 0;
+  margin: 0;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+/*Not sure about colours yet. The naming is copied from website so not final */
+:root{
+  --color-bg: #2b2924; 
+  --color-bg-variant: #3e4630;
+  --color-primary: #9DB17C; 
+  --color-primary-variant: rgba(157, 177, 124, 0.5); 
+  --color-white: #FFFFFF; 
+  --color-light: rgb(216, 216, 216); 
+}
+
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background: var(--color-bg-variant);
+}
+
+.container{
+  width: 125rem;
+  height: 46rem;
+  background-color: var(--color-primary-variant);
+  padding: 1rem 2rem;
+  border-radius: 0.3rem;
+  overflow-x: hidden;
+}
+
+.container .content h2{
+  font-size: 2rem;
+  color: var(--color-bg);
+  padding: 2rem 0;
+}
+
+.progress_container{
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.progress_container::before{
+  content: "";
+  position: absolute;
+  background-color: var(--color-light);
+  height: 0.25rem;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  z-index: 1;
+  transform: translateY(-50%);
+}
+
+.progress{
+  background-color: var(--color-bg);
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 0.25rem;
+  z-index: 1;
+  transition: all 0.75s ease-in
+}
+
+.circle{
+  background-color: var(--color-bg);
+  color: var(--color-white);
+  height: 7rem;
+  width: 9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.circle.active{
+  border-color: var(--color-light);
+  color: var(--color-white);
+  background-color: var(--color-primary-variant);
+}
+
+.btns{
+  display: flex;
+  margin: 1rem 0;
+}
+
+.btn{
+  outline: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  background-color: var(--color-bg);
+  color: var(--color-white);
+  padding: 0.5rem 2.2rem;
+  height: 3rem;
+  width: 9rem;
+  margin-top: 27rem;
+  margin-left: 116rem;
+}
+
+.btn:active{
+  outline: none;
+  transform: scale(0.92);
+}
+
+.disabled{
+  outline: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  color: var(--color-white);
+  padding: 0.25rem 2.5rem;
+  background-color: var(--color-light);
+  cursor: not-allowed;
+}
