@@ -22,13 +22,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 80vh;
+  min-height: 100vh;
   background: var(--color-bg-variant);
 }
 
 .container{
   width: 125rem;
-  height: 46rem;
+  height: 58rem;
   background-color: var(--color-primary-variant);
   padding: 1rem 2rem;
   border-radius: 0.3rem;
@@ -38,7 +38,7 @@ body {
 .container .content h2{
   font-size: 2rem;
   color: var(--color-bg);
-  padding: 2rem 0;
+  padding: 1.5rem 0;
 }
 
 .progress_container{
@@ -61,18 +61,19 @@ body {
 }
 
 .progress{
-  background-color: var(--color-bg);
+  background-color: var(--color-white);
   position: absolute;
   top: 50%;
   left: 0;
   transform: translateY(-50%);
   height: 0.25rem;
+  width: 100%;
   z-index: 1;
-  transition: all 0.75s ease-in
+  transition: all 0.6s ease-in
 }
 
 .circle{
-  background-color: var(--color-bg);
+  background-color: var(--color-primary);
   color: var(--color-white);
   height: 7rem;
   width: 9rem;
@@ -86,12 +87,7 @@ body {
 .circle.active{
   border-color: var(--color-light);
   color: var(--color-white);
-  background-color: var(--color-primary-variant);
-}
-
-.btns{
-  display: flex;
-  margin: 1rem 0;
+  background-color: var(--color-bg);
 }
 
 .btn{
@@ -118,9 +114,58 @@ body {
   outline: none;
   border: none;
   cursor: pointer;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
   color: var(--color-white);
-  padding: 0.25rem 2.5rem;
+  padding: 0.5rem 2.2rem;
+  height: 3rem;
+  width: 9rem;
   background-color: var(--color-light);
   cursor: not-allowed;
+  margin-top: 0.2rem;
+  margin-left: 116rem;
+}
+
+.results{
+  background-color: var(--color-primary);
+  height: 12.3rem;
+  width: 125.3rem;
+  border-radius: 0.3rem;
+}
+
+.container .results h3{
+  margin-top: .9rem;
+  font-size: 1.75rem;
+  color: var(--color-bg);
+  padding: 1.5rem 0.5rem;
+}
+
+
+.container .results h4{
+  font-size: 1.62rem;
+  color: var(--color-bg);
+  padding: 2rem 0.5rem;
+  margin-top: -3.1rem;
+}
+
+.container .results .btn{
+  margin-top: 0.2rem;
+}
+
+.form-container h2{
+  text-align: center;
+}
+
+.form-container form input{
+  width: 94%;
+  border: 1px solid var(--color-white);
+  padding: 0.8rem 0.5rem;
+  font-family: inherit;
+  margin-bottom: 1rem;
+  border-radius: 0.3rem;
+}
+
+.form-container form input:active{
+  outline: none;
+  border: none;
 }
