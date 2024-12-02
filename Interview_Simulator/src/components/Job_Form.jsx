@@ -6,7 +6,26 @@ function Job_Description({pressedNext, totalSteps, currentStep}){
     const [companyName, setCompanyName] = useState('')
     const [jobDescription, setJobDescription] = useState('')
     const [jobRequirements, setJobRequirements] = useState('')
+
+    const answers_submitted = async () =>{
+        console.log(jobTitle, companyName)
+    }
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
     
+        if (name === "jobTitle") {
+            setJobTitle(value);
+        } else if (name === "companyName") {
+            setCompanyName(value);
+        } else if (name === "jobDescription") {
+            setJobDescription(value);
+        } else if (name === "jobRequirments") {
+            setJobRequirements(value);
+        }
+    }
+
+
     return (
         <div>
         <div className="form-container">
@@ -14,17 +33,31 @@ function Job_Description({pressedNext, totalSteps, currentStep}){
             <form> 
                 <input 
                 type="text" 
+                name="jobTitle"
                 placeholder="What is the Job Title (eg. Software Engineering Intern)"
+                required onChange={handleChange}
                 />
-                <input type="text" placeholder="What is the Company Name (eg. Mohib's Software Inc.)"></input>
-                <input type="text" placeholder="What is the Job Description (eg. The 'What we do' and/or 'What you will do' sections)" className="description_section"></input>
-                <input type="text" placeholder="What are the Job Requirments (eg. Skills/Requirments section (Python, Bachelors, ...))" className="requirments_section"></input>
+                <input type="text"
+                name="companyName"
+                placeholder="What is the Company Name (eg. Mohib's Software Inc.)" 
+                required onChange={handleChange}
+                />
+                <input type="text" 
+                name="jobDescription"
+                placeholder="What is the Job Description (eg. The 'What we do' and/or 'What you will do' sections)" 
+                className="description_section" 
+                required onChange={handleChange}/>
+                <input type="text" 
+                name="jobRequirments"
+                placeholder="What are the Job Requirments (eg. Skills/Requirments section (Python, Bachelors, ...))" 
+                className="requirments_section" 
+                required onChange={handleChange}/>
             </form>
         </div>
         {/*         */}
         
         <div className='submitbtn'>
-            <button className='btn'>Submit</button>
+            <button className='btn' onClick={answers_submitted}>Submit</button>
         </div>
 
         <div className='results'>
