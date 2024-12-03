@@ -1,27 +1,30 @@
 import React, { useState } from 'react'
+import Results from './Results'
 
 
-function Job_Description({pressedNext, totalSteps, currentStep}){
+function Job_Description({pressedNext, totalSteps, currentStep, jobDatatoMain}){
     const [jobTitle, setJobTitle] = useState('')
     const [companyName, setCompanyName] = useState('')
     const [jobDescription, setJobDescription] = useState('')
     const [jobRequirements, setJobRequirements] = useState('')
 
     const answers_submitted = async () =>{
-        console.log(jobTitle, companyName)
+        const data = [jobTitle, companyName, jobDescription, jobRequirements]
+        jobDatatoMain(data)
     }
 
     const handleChange = (event) => {
-        const { name, value } = event.target;
+        const { name, value } = event.target
+        console.log(`Field: ${name}, Value: ${value}`)
     
         if (name === "jobTitle") {
-            setJobTitle(value);
+            setJobTitle(value)
         } else if (name === "companyName") {
-            setCompanyName(value);
+            setCompanyName(value)
         } else if (name === "jobDescription") {
-            setJobDescription(value);
-        } else if (name === "jobRequirments") {
-            setJobRequirements(value);
+            setJobDescription(value)
+        } else if (name === "jobRequirements") {
+            setJobRequirements(value)
         }
     }
 
@@ -42,14 +45,16 @@ function Job_Description({pressedNext, totalSteps, currentStep}){
                 placeholder="What is the Company Name (eg. Mohib's Software Inc.)" 
                 required onChange={handleChange}
                 />
-                <input type="text" 
+                <textarea type='text'
                 name="jobDescription"
-                placeholder="What is the Job Description (eg. The 'What we do' and/or 'What you will do' sections)" 
+                maxLength='700'
+                placeholder="What is the Job Description (eg. The 'What we do' and/or 'What you will do' sections). You are only allowed 700 characters" 
                 className="description_section" 
                 required onChange={handleChange}/>
-                <input type="text" 
-                name="jobRequirments"
-                placeholder="What are the Job Requirments (eg. Skills/Requirments section (Python, Bachelors, ...))" 
+                <textarea type='text'
+                name="jobRequirements"
+                maxLength='700'
+                placeholder="What are the Job Requirments (eg. Skills/Requirments section (Python, Bachelors, ...)).. You are only allowed 700 characters " 
                 className="requirments_section" 
                 required onChange={handleChange}/>
             </form>
@@ -60,16 +65,8 @@ function Job_Description({pressedNext, totalSteps, currentStep}){
             <button className='btn' onClick={answers_submitted}>Submit</button>
         </div>
 
-        <div className='results'>
-                <div className='results_5'>
-                    <h3>Results: You will get a rating out of /5 for your response</h3>
-                </div>
-                <div className='results_reedback'>
-                    <h4>Feedback: This is where you will see feedback when you complete a question</h4>
-                </div>
-                <div> 
-                <button className={`${currentStep === totalSteps ? "disabled":"btn"}`} onClick={pressedNext}>Next</button>
-                </div>
+        <div>
+            <Results pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>
         </div>
     </div>
     )

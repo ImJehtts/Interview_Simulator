@@ -6,15 +6,20 @@ import Job_Description from './Job_Form'
 
 function MainPages(){
     const [currentStep, setcurrentStep] = useState(0)
+    const [jobdata, setjobData] = useState('')
     const totalSteps = 6
 
     function pressedNext() {
         if (currentStep < 7) setcurrentStep((currentStep) => currentStep + 1)
     }
 
+    const jobDatatoMain = (jobdata) => {
+        setjobData(jobdata)
+    }
+
     const renderSteps = () =>{
         switch (currentStep){
-            case 0: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>;
+            case 0: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep} jobDatatoMain={jobDatatoMain}/>;
             case 1: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>;
             case 2: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>;
             case 3: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>;
