@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import ProgressBar from './ProgressBar'
 import Job_Description from './Job_Form'
+import Behavioural1 from './Behavioural1'
 
 
 
@@ -15,12 +16,13 @@ function MainPages(){
 
     const jobDatatoMain = (jobdata) => {
         setjobData(jobdata)
+        console.log(jobdata)
     }
 
     const renderSteps = () =>{
         switch (currentStep){
             case 0: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep} jobDatatoMain={jobDatatoMain}/>;
-            case 1: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>;
+            case 1: return <Behavioural1 pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep} jobData={jobdata}/>;
             case 2: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>;
             case 3: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>;
             case 4: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>;

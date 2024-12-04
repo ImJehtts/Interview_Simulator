@@ -193,6 +193,32 @@ body {
     padding-top: 0.2rem;
 }
 
+.behavioural-form h2{
+  text-align: center;
+}
+
+
+.behavioural-form form textarea{
+  height: 17rem;
+  font-size: 1rem;
+  resize: none;
+  width: 56rem;
+  border-radius: 0.5rem;
+  color: black;
+  background-color: var(--color-light);
+  padding-left: 0.2rem;
+  padding-top: 0.2rem;
+  margin-left: 69rem;
+}
+
+.behavioural-form h3{
+  font-size: 1.62rem;
+  color: var(--color-bg);
+  margin-top: -1.4rem;
+}
+
+
+
 @media screen and (max-width: 1850px){
 
   body {

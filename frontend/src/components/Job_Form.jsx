@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Results from './Results'
+import {trimjobData} from './OpenAI_functions'
 
 
 function Job_Description({pressedNext, totalSteps, currentStep, jobDatatoMain}){
@@ -15,7 +16,6 @@ function Job_Description({pressedNext, totalSteps, currentStep, jobDatatoMain}){
 
     const handleChange = (event) => {
         const { name, value } = event.target
-        console.log(`Field: ${name}, Value: ${value}`)
     
         if (name === "jobTitle") {
             setJobTitle(value)
@@ -47,13 +47,13 @@ function Job_Description({pressedNext, totalSteps, currentStep, jobDatatoMain}){
                 />
                 <textarea type='text'
                 name="jobDescription"
-                maxLength='700'
+                maxLength='2000'
                 placeholder="What is the Job Description (eg. The 'What we do' and/or 'What you will do' sections). You are only allowed 700 characters" 
                 className="description_section" 
                 required onChange={handleChange}/>
                 <textarea type='text'
                 name="jobRequirements"
-                maxLength='700'
+                maxLength='2000'
                 placeholder="What are the Job Requirments (eg. Skills/Requirments section (Python, Bachelors, ...)).. You are only allowed 700 characters " 
                 className="requirments_section" 
                 required onChange={handleChange}/>
