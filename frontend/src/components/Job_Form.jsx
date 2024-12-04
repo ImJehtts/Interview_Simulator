@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Results from './Results'
-import {trimjobData} from './OpenAI_functions'
 
 
 function Job_Description({pressedNext, totalSteps, currentStep, jobDatatoMain}){
