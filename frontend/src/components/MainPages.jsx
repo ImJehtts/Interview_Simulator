@@ -16,7 +16,7 @@ function MainPages(){
 
     const jobDatatoMain = (jobdata) => {
         setjobData(jobdata)
-        console.log(jobdata)
+        console.log("This is jobdata post summary:", jobdata)
     }
 
     const renderSteps = () =>{

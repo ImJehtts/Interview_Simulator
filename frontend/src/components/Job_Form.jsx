@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import Results from './Results'
+import axios from 'axios';
+
 
 
 function Job_Description({pressedNext, totalSteps, currentStep, jobDatatoMain}){
@@ -10,7 +12,23 @@ function Job_Description({pressedNext, totalSteps, currentStep, jobDatatoMain}){
 
     const answers_submitted = async () =>{
         const data = [jobTitle, companyName, jobDescription, jobRequirements]
-        jobDatatoMain(data)
+
+        const finalText2 = jobDescription.replace(/\n\n+/g, '\n').split('\n').map(line => line.trim()).join('\n');
+        data[2] = finalText2
+
+        const finalText3 = jobRequirements.replace(/\n\n+/g, '\n').split('\n').map(line => line.trim()).join('\n');
+        data[3] = finalText3
+
+        try {
+            const response = await axios.patch('http://localhost:4800/OpenAi_routes/trimjobinfo', {
+                jobData: data,
+            });
+
+            jobDatatoMain(response.data);  
+        
+          } catch (error) {
+            console.error('Error submitting job data:', error);
+          }
     }
 
     const handleChange = (event) => {

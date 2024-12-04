@@ -6,6 +6,6 @@ const {
 
 
 
-router.get('/trimjobinfo', trimJobinformation)
+router.patch('/trimjobinfo', trimJobinformation)
 
 module.exports = router

@@ -11,12 +11,12 @@ const trimJobinformation  = async (req, res) =>{
         const {jobData} = req.body;
 
         if (!jobData || jobData.length < 4) {
-            return res.status(400).json({ error: 'Invalid job data format.' });
+            return res.status(400).json({ error: 'Invalid jobData format.' });
         }
 
         const prompt =`
         You are given two job-related paragraphs: one describes the job description and the other outlines the job requirements. 
-        Your task is to summarize the paragraphs to a maximum of 600 characters each, preserving all critical information.
+        Your task is to summarize the paragraphs to a maximum of 750 characters each, preserving all critical information including what you'll be working on and languages/frameworks and concepts they value.
         Respond with json format like this. No extra information. Just this without the quotations:
         "{1:Blahblahblahjobstuff
         2:Blahblahblahjobstuff}" 
@@ -49,7 +49,7 @@ const trimJobinformation  = async (req, res) =>{
     jobData[2] = jobDescription;
     jobData[3] = jobRequirements;
 
-    res.status(200).json({ jobDescription, jobRequirements });
+    res.status(200).json({jobDescription, jobRequirements});
     } catch (error) {
         console.error(error);
         res.status(500).json({error: error.message});
