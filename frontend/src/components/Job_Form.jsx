@@ -13,10 +13,10 @@ function Job_Description({pressedNext, totalSteps, currentStep, jobDatatoMain}){
     const answers_submitted = async () =>{
         const data = [jobTitle, companyName, jobDescription, jobRequirements]
 
-        const finalText2 = jobDescription.replace(/\n\n+/g, '\n').split('\n').map(line => line.trim()).join('\n');
+        const finalText2 = jobDescription.replace(/\s+/g, ' ').replace(/\n\s*\n/g, '\n').split('\n').map(line => line.trim()).join('\n');
         data[2] = finalText2
 
-        const finalText3 = jobRequirements.replace(/\n\n+/g, '\n').split('\n').map(line => line.trim()).join('\n');
+        const finalText3 = jobRequirements.replace(/\s+/g, ' ').replace(/\n\s*\n/g, '\n').split('\n').map(line => line.trim()).join('\n');
         data[3] = finalText3
 
         try {
