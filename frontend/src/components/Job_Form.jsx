@@ -4,11 +4,12 @@ import axios from 'axios';
 
 
 
-function Job_Description({pressedNext, totalSteps, currentStep, jobDatatoMain}){
+function Job_Description({pressedNext, jobDatatoMain}){
     const [jobTitle, setJobTitle] = useState('')
     const [companyName, setCompanyName] = useState('')
     const [jobDescription, setJobDescription] = useState('')
     const [jobRequirements, setJobRequirements] = useState('')
+    const [apirecieved, setApirecieved] = useState(0)
 
     const answers_submitted = async () =>{
         const data = [jobTitle, companyName, jobDescription, jobRequirements]
@@ -24,7 +25,11 @@ function Job_Description({pressedNext, totalSteps, currentStep, jobDatatoMain}){
                 jobData: data,
             });
 
-            jobDatatoMain(response.data);  
+            const {jobDret, jobRret} = response.data; 
+            data[2] = jobDret
+            data[3] = jobRret
+            jobDatatoMain(data)
+            setApirecieved(1)
         
           } catch (error) {
             console.error('Error submitting job data:', error);
@@ -83,7 +88,9 @@ function Job_Description({pressedNext, totalSteps, currentStep, jobDatatoMain}){
         </div>
 
         <div>
-            <Results pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>
+            <Results pressedNext={pressedNext}   
+            rating={"You will get a rating out of /5 for your response"} feedback={"This is where you will see feedback when you complete a question<"}
+            cangonext={apirecieved}/>
         </div>
     </div>
     )

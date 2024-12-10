@@ -16,13 +16,12 @@ function MainPages(){
 
     const jobDatatoMain = (jobdata) => {
         setjobData(jobdata)
-        console.log("This is jobdata post summary:", jobdata)
     }
 
     const renderSteps = () =>{
         switch (currentStep){
-            case 0: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep} jobDatatoMain={jobDatatoMain}/>;
-            case 1: return <Behavioural1 pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep} jobData={jobdata}/>;
+            case 0: return <Job_Description pressedNext={pressedNext} jobDatatoMain={jobDatatoMain}/>;
+            case 1: return <Behavioural1 pressedNext={pressedNext} jobData={jobdata}/>;
             case 2: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>;
             case 3: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>;
             case 4: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>;

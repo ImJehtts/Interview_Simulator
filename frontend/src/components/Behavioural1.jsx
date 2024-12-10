@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react'
 import Results from './Results'
 import axios from 'axios';
 
-const Behavioural1 = ({pressedNext, totalSteps, currentStep, jobData}) => {
+const Behavioural1 = ({pressedNext, jobData}) => {
     const [question, setQuestion] = useState('')
-    const [Questionanswer, setQuestionanswer] = useState('')
-    const [ratingnumber, setRatingnumber] = useState(0)
+    const [questionanswer, setQuestionanswer] = useState('')
+    const [ratingnumber, setRatingnumber] = useState('0.0/5')
     const [feedback, setFeedback] = useState('')
 
     useEffect(() => {
         const getquestion = async () =>{
             try {
-                const response = await axios.patch('http://localhost:4800/OpenAi_routes/behavioural1question', {
+                const response = await axios.post('http://localhost:4800/OpenAi_routes/behavioural1question', {
                     jobData: jobData,
                 });
                 if (response.status === 200){
@@ -30,12 +30,37 @@ const Behavioural1 = ({pressedNext, totalSteps, currentStep, jobData}) => {
 
 
     const answers_submitted = async () =>{
+        const questionanswercleaned = questionanswer.replace(/\s+/g, ' ').replace(/\n\s*\n/g, '\n').split('\n').map(line => line.trim()).join('\n');
+        setQuestionanswer(questionanswercleaned)
 
+        try {
+            console.log('Question:', question);
+            console.log('Question Answer:', questionanswer);
+            console.log('Job Data:', jobData);
+            
+            const response = await axios.post('http://localhost:4800/OpenAi_routes/behaveQ1feedback', {
+                question:question,
+                questionanswer:questionanswer,
+                jobData: jobData,
+            });
+            if (response.status === 200){
+                const {feedback, rating} = response.data; 
+                setFeedback(feedback)
+                setRatingnumber(rating)
+                console.log(feedback)
+
+            }else {
+                console.error('Failed to get question: ', response.statusText);
+            }
+            
+          } catch (error) {
+            console.error('Error submitting job data:', error);
+          }
     }
     
 
     const handleChange = (event) => {
-        const value = event.target
+        const value = event.target.value
         setQuestionanswer(value)
     }
 
@@ -60,7 +85,7 @@ const Behavioural1 = ({pressedNext, totalSteps, currentStep, jobData}) => {
             <button className='btn' onClick={answers_submitted}>Submit</button>
         </div>
         <div>
-            <Results pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>
+            <Results pressedNext={pressedNext} rating={ratingnumber} feedback={feedback}/>
         </div>
      </div>
     )
