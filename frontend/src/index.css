@@ -193,8 +193,21 @@ body {
     padding-top: 0.2rem;
 }
 
+.behavioural-form {
+  display: flex;
+  justify-content: space-between; 
+  align-items: flex-start; 
+  gap: 2rem; 
+  position: relative;
+}
+
 .behavioural-form h2{
-  text-align: center;
+  position: absolute;
+  left: 50%; 
+  transform: translateX(-50%); 
+  margin: 0; 
+  top: 0; 
+  margin-top: -2rem;
 }
 
 
@@ -202,19 +215,34 @@ body {
   height: 17rem;
   font-size: 1rem;
   resize: none;
-  width: 56rem;
+  width: 100%; 
+  max-width: 55rem;
   border-radius: 0.5rem;
   color: black;
   background-color: var(--color-light);
-  padding-left: 0.2rem;
-  padding-top: 0.2rem;
-  margin-left: 69rem;
+  padding: 0.75rem; 
+  margin: 0; 
+  flex-shrink: 0; 
+  box-sizing: border-box; 
+  margin-left: 21rem; 
+  margin-top: 4rem;
 }
 
 .behavioural-form h3{
   font-size: 1.62rem;
   color: var(--color-bg);
-  margin-top: -1.4rem;
+  flex: 0 0 35%;
+  /*
+  First 0: This value specifies how much the element will grow relative to the other flex items. 0 means it will not grow.
+  Second 0: This value specifies how much the element will shrink relative to the other flex items. 0 means it will not shrink.
+  35%: This value specifies the initial size of the item. It means the h3 will take up 35% of the available space in the container.
+  */
+  margin: 0;
+  margin-top: 4rem;
+}
+
+.behavioural-form form {
+  flex: 0 0 60%; 
 }
 
 
