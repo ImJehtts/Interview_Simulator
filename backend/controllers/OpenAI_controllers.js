@@ -41,7 +41,6 @@ const trimJobinformation  = async (req, res) =>{
     }
 
     const rawResponse = response.choices[0].message.content
-    console.log('Raw OpenAI Response:', rawResponse)
 
     const jsonResponse = JSON.parse(rawResponse)
     const {jobDescriptionres, jobRequirementsres} = jsonResponse
@@ -60,22 +59,16 @@ const trimJobinformation  = async (req, res) =>{
     }
 }
 
-    const behavioural1question = async (req, res) =>{
+    const behaviouralquestion = async (req, res) =>{
         try {
-            const {jobData} = req.body
+            const {jobData, prompt} = req.body
     
             if (!jobData || jobData.length < 4) {
                 return res.status(400).json({ error: 'Invalid jobData format.' })
             }
-    
-            const prompt =`Act as an interview simulator for an icebreaker round. Based on the following details: Role Name:${jobData[0]} Company Name:${jobData[1]} Role Description:${jobData[2]} 
-            Generate a behavioral interview question that is light, engaging, and non-technical. The goal is to help the interviewer get to know the candidate better
-            but it should still be a question that could appear in an interview/
-            Examples include: Why did you choose [Insert Company Name]?, Tell me about yourself.
-            What's something you're particularly proud of, either personally or professionally?
-            Think of 3 potential questions and return only one that fits best for the role. A get to know of why you would want to hire them. 
-            Respond in this strict JSON format (no additional information or text). Dont even label it as json:
-            {"question": "Your thoughtfully crafted icebreaker question here"}`
+            if (!prompt) {
+                return res.status(400).json({ error: 'Invalid prompt.' })
+            }
 
         const response = await openai.chat.completions.create({
             messages: [{ role: 'user', content: prompt }],
@@ -105,19 +98,13 @@ const trimJobinformation  = async (req, res) =>{
 }
 
 
-const behaveQ1feedback = async (req, res) =>{
+const behaveQfeedback = async (req, res) =>{
     try {
-        const {question, questionanswer, jobData} = req.body
+        const {question, questionanswer, jobData, prompt} = req.body
 
         if (!question || !questionanswer || !jobData || !jobData[0]) {
             return res.status(400).json({error: 'Invalid data format'})
         }
-
-        const prompt = `This was the question: "${question}". This was the answer: "${questionanswer}". This was the jobtitle: "${jobData[0]}".
-        This is meant to be for an interview simulator so critique accordingly. Call out answers that are too short or vague or even too long. Feel free to be harsh with rating or feedback. 
-        Don't give out easy 4 or 5's.   
-        Provide 2-3 lines of feedback and give a rating to one decimal point out of 5. Respond strictly in this JSON format (no additional information or text). Dont even label it as json:
-        {"feedback": "Your feedback here", "rating": "Your rating here (example: 3.5/5)"}`
 
         const response = await openai.chat.completions.create({
             messages: [{role: 'user', content: prompt}],
@@ -130,8 +117,6 @@ const behaveQ1feedback = async (req, res) =>{
 
         const rawResponse = response.choices[0].message.content
 
-        console.log('Raw OpenAI Response:', rawResponse)
-
         const {feedback, rating} = JSON.parse(response.choices[0].message.content)
 
         res.status(200).json({feedback, rating})
@@ -143,6 +128,6 @@ const behaveQ1feedback = async (req, res) =>{
 
 module.exports = {
     trimJobinformation,
-    behavioural1question,
-    behaveQ1feedback
+    behaviouralquestion,
+    behaveQfeedback
 }
