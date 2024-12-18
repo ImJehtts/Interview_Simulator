@@ -126,8 +126,77 @@ const behaveQfeedback = async (req, res) =>{
     }
 }
 
+const techcodequestion = async (req, res) =>{
+    try {
+        const {jobData, prompt, skills, language} = req.body
+
+        if (!jobData || jobData.length < 4) {
+            return res.status(400).json({ error: 'Invalid jobData format.' })
+        }
+        if (!prompt) {
+            return res.status(400).json({ error: 'Invalid prompt.' })
+        }
+        if (!skills) {
+            return res.status(400).json({ error: 'Invalid skills.' })
+        }
+        if (!language) {
+            return res.status(400).json({ error: 'Invalid language.' })
+        }
+
+    const response = await openai.chat.completions.create({
+        messages: [{ role: 'user', content: prompt }],
+        model:"gpt-4o",
+    })
+
+    if (!response || !response.choices || response.choices.length === 0) {
+        throw new Error('API response didnt work or no choices returned')
+    }
+
+    const rawResponse = response.choices[0].message.content
+
+    const {question, TestCase1Input, TestCase1Output, TestCase2Input, TestCase2Output} = JSON.parse(response.choices[0].message.content)
+
+
+    res.status(200).json({question, TestCase1Input, TestCase1Output, TestCase2Input, TestCase2Output})
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({error: error.message})
+    }
+}
+
+const techcodequestionfeedback = async (req, res) =>{
+    try {
+        const {question, questionanswer, language} = req.body
+
+        if (!question || !questionanswer || !language) {
+            return res.status(400).json({error: 'Invalid data format'})
+        }
+
+        const response = await openai.chat.completions.create({
+            messages: [{role: 'user', content: prompt}],
+            model: "gpt-4o",
+        })
+
+        if (!response || !response.choices || response.choices.length === 0) {
+            throw new Error('API response is invalid or no choices were returned.')
+        }
+
+        const rawResponse = response.choices[0].message.content
+        console.log(rawResponse)
+
+        const {feedback, rating} = JSON.parse(response.choices[0].message.content)
+
+        res.status(200).json({feedback, rating})
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({error: error.message})
+    }
+}
+
 module.exports = {
     trimJobinformation,
     behaviouralquestion,
-    behaveQfeedback
+    behaveQfeedback,
+    techcodequestion,
+    techcodequestionfeedback
 }

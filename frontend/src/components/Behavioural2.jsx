@@ -36,7 +36,7 @@ const Behavioural2 = ({pressedNext, jobData, overallRatingtoMain}) => {
                 }
                 
               } catch (error) {
-                console.error('Error submitting job data:', error);
+                console.error('Error submitting data:', error);
               }
         }
         getquestion()
@@ -73,11 +73,11 @@ const Behavioural2 = ({pressedNext, jobData, overallRatingtoMain}) => {
                 setApirecieved(1)
 
             }else {
-                console.error('Failed to get question: ', response.statusText);
+                console.error('Failed to get feedback: ', response.statusText);
             }
             
           } catch (error) {
-            console.error('Error submitting job data:', error);
+            console.error('Error submitting data:', error);
           }
     }
     

@@ -3,7 +3,9 @@ const router = express.Router()
 const {
     trimJobinformation,
     behaviouralquestion,
-    behaveQfeedback
+    behaveQfeedback,
+    techcodequestion,
+    techcodequestionfeedback
 } = require('../controllers/OpenAI_controllers')
 
 
@@ -11,5 +13,7 @@ const {
 router.patch('/trimjobinfo', trimJobinformation)
 router.post('/behaviouralquestion', behaviouralquestion)
 router.post('/behaveQfeedback', behaveQfeedback)
+router.post('/techcodequestion', techcodequestion)
+router.post('/techcodequestionfeedback', techcodequestionfeedback)
 
 module.exports = router

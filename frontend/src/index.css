@@ -193,7 +193,7 @@ body {
     padding-top: 0.2rem;
 }
 
-.behavioural-form {
+.behavioural-form, .codequestion-form {
   display: flex;
   justify-content: space-between; 
   align-items: flex-start; 
@@ -201,7 +201,12 @@ body {
   position: relative;
 }
 
-.behavioural-form h2{
+.codequestion-form {
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.behavioural-form h2, .codequestion-form h2{
   position: absolute;
   left: 50%; 
   transform: translateX(-50%); 
@@ -210,8 +215,8 @@ body {
   margin-top: -2rem;
 }
 
-
-.behavioural-form form textarea{
+.behavioural-form form textarea,
+.codequestion-form form textarea{
   height: 17rem;
   font-size: 1rem;
   resize: none;
@@ -228,7 +233,17 @@ body {
   margin-top: 4rem;
 }
 
-.behavioural-form h3{
+.codequestion-form form textarea {
+  margin-left: 52rem;
+  width: 100%;
+}
+
+.codequestion-form form {
+  flex-grow: 1;
+  margin-top: 0;
+}
+
+.behavioural-form h3, .codequestion-form h3{
   font-size: 1.62rem;
   color: var(--color-bg);
   flex: 0 0 35%;
@@ -279,8 +294,29 @@ body {
   margin-top: -0.8rem;
 }
 
+.codequestion-form h3{
+  font-size: 1.4rem;
+}
 
-@media screen and (max-width: 1850px){
+.codequestion-form .testcases {
+  font-size: 1.3rem;
+  margin-top: 18rem;
+  margin-left: -44.5rem;
+}
+
+.codequestion-form .testcases h4{
+  font-size: 1.5rem;
+}
+
+.codequestion .submitbtn{
+  margin-top: -5rem;
+  margin-bottom: 0.5rem;
+}
+
+
+
+
+@media screen and (max-width: 2080px){
 
   body {
     min-height: 98vh;
@@ -296,6 +332,11 @@ body {
   .container .content h2{
     font-size: 1.8rem;
     padding: 1.5rem 0;
+  }
+
+  .form-container h2{
+    margin-bottom: -1.2rem;
+    margin-top: -0.5rem;
   }
   
   .progress_container{
@@ -362,21 +403,54 @@ body {
   }
   
   .container .results .btn{
-    margin-top: 2rem;
+    margin-top: 0.45rem;
     margin-left: 69.5rem;
+    font-size: 1.25rem;
   }
 
   .submitbtn .btn {
-    margin-left: 69rem;
+    margin-left: 70rem;
+    margin-top: -0.1rem;
+    margin-bottom: 1.4rem;
+    font-size: 1.25rem;
   }
 
   .topicscheckbox-item, .languagecheckbox-item {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .selections .submitbtn{
-    margin-top: -6rem;
-    margin-bottom: 11.75rem;
+    margin-top: -1.8rem;
+    margin-bottom: 9.75rem;
+  }
+
+  .codequestion-form h3{
+    font-size: 1.1rem;
+  }
+  
+  .codequestion-form .testcases {
+    font-size: 1rem;
+    margin-top: 16rem;
+    margin-left: -28.7rem;
+  }
+  
+  .codequestion-form .testcases h4{
+    font-size: 1.1rem;
+  }
+
+  .codequestion-form form textarea {
+    margin-left: 22rem;
+    width: 65%;
+  }
+
+  .behavioural-form form textarea{
+    margin-left: 9.5rem;
+    width: 80%;
+  }
+
+  .codequestion .submitbtn{
+    margin-top: -2.2rem;
+    margin-bottom: 10rem;
   }
 
 }
