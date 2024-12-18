@@ -3,6 +3,7 @@ import ProgressBar from './ProgressBar'
 import Job_Description from './Job_Form'
 import Behavioural1 from './Behavioural1'
 import Behavioural2 from './Behavioural2.jsx'
+import Skills_Select from './Skills_Select.jsx'
 
 
 
@@ -10,6 +11,8 @@ function MainPages(){
     const [currentStep, setcurrentStep] = useState(0)
     const [jobdata, setjobData] = useState('')
     const [overallRating, setoverallRating] = useState(0)
+    const [skills, setSkills] = useState([])
+    const [language, setLanguage] = useState('')
     const totalSteps = 6
 
     function pressedNext() {
@@ -24,12 +27,23 @@ function MainPages(){
         setoverallRating((prevRating) => prevRating + rating);
     }
 
+    const skillstoMain = (skills) => {
+        setSkills(skills)
+        console.log(skills)
+    }
+
+    const languagetoMain = (language) => {
+        setLanguage(language)
+        console.log(language)
+    }
+
+
     const renderSteps = () =>{
         switch (currentStep){
             case 0: return <Job_Description pressedNext={pressedNext} jobDatatoMain={jobDatatoMain}/>;
             case 1: return <Behavioural1 pressedNext={pressedNext} jobData={jobdata} overallRatingtoMain={overallRatingtoMain}/>;
             case 2: return <Behavioural2 pressedNext={pressedNext} jobData={jobdata} overallRatingtoMain={overallRatingtoMain}/>;
-            case 3: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>;
+            case 3: return <Skills_Select pressedNext={pressedNext} skillstoMain={skillstoMain} languagetoMain={languagetoMain}/>
             case 4: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>;
             case 5: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>;
             case 6: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>;
