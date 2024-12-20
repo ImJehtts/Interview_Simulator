@@ -53,28 +53,23 @@ const Techincal_Code = ({pressedNext, jobData, overallRatingtoMain, skills, lang
       }, [])
 
 
-    const answers_submitted = async () =>{
+    const answers_submit = async () =>{
         console.log('Button clicked')
         const questionanswercleaned = questionanswer.replace(/\s+/g, ' ').replace(/\n\s*\n/g, '\n').split('\n').map(line => line.trim()).join('\n')
 
         setQuestionanswer(questionanswercleaned)
 
         try {
-
             let prompt = `This was the question: "${question}". This was the answer: "${questionanswer}". This was the language: "${language}".
             This is an interview simulator designed to provide feedback on answers to Leetcode-style technical questions. Evaluate the response based on the following criteria:
             1. Completeness: Is the answer fully solving the problem as outlined in the question and test cases?
-            2. Clarity: Does the answer provide a clear and logical explanation of the approach, including any assumptions or edge cases?
+            2. Clarity & Depth: Does the answer provide a logical approach, including any assumptions or edge cases?
             3. Efficiency: Evaluate whether the solution is optimal for the problem's constraints (e.g., time and space complexity).
-            4. Depth: Does the answer demonstrate an understanding of the question?
-            5. Conciseness: Is the answer too long, redundant, or overly detailed without adding value?
+            4. Conciseness: Is the answer too long, redundant, or overly detailed without adding value?
             Provide 2-4 lines of feedback and give a rating to one decimal point out of 5. Respond strictly in this JSON format (no additional information or text). Dont even label it as json:
             {"feedback": "Your feedback here", "rating": "Your rating here (example: 3.5/5)"}`
             
             const response = await axios.post('http://localhost:4800/OpenAi_routes/techcodequestionfeedback', {
-                question:question,
-                questionanswer:questionanswer,
-                jobData: jobData,
                 prompt: prompt,
             })
             if (response.status === 200){
@@ -101,7 +96,7 @@ const Techincal_Code = ({pressedNext, jobData, overallRatingtoMain, skills, lang
 
 
     return (
-        <div className='codequestion'>
+        <div>
             <div className='codequestion-form'>
                 <h2>Code Question</h2>
                 <h3>
@@ -130,9 +125,8 @@ const Techincal_Code = ({pressedNext, jobData, overallRatingtoMain, skills, lang
             </div>
 
         {/*         */}
-        
         <div className='submitbtn'>
-            <button className='btn' onClick={answers_submitted}>Submit</button>
+            <button className='btn' onClick={answers_submit}>Submit</button>
         </div>
         <div>
             <Results pressedNext={pressedNext} rating={ratingnumber} feedback={feedback} cangonext={apirecieved}/>

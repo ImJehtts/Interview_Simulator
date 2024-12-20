@@ -102,7 +102,7 @@ const behaveQfeedback = async (req, res) =>{
     try {
         const {question, questionanswer, jobData, prompt} = req.body
 
-        if (!question || !questionanswer || !jobData || !jobData[0]) {
+        if (!question || !questionanswer || !jobData || !prompt) {
             return res.status(400).json({error: 'Invalid data format'})
         }
 
@@ -166,9 +166,8 @@ const techcodequestion = async (req, res) =>{
 
 const techcodequestionfeedback = async (req, res) =>{
     try {
-        const {question, questionanswer, language} = req.body
-
-        if (!question || !questionanswer || !language) {
+        const {prompt} = req.body
+        if (!prompt) {
             return res.status(400).json({error: 'Invalid data format'})
         }
 

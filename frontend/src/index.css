@@ -36,7 +36,7 @@ body {
 }
 
 .container .content h2{
-  font-size: 2rem;
+  font-size: 1.9rem;
   color: var(--color-bg);
   padding: 1.5rem 0;
 }
@@ -138,14 +138,14 @@ body {
 
 .container .results h3{
   margin-top: .9rem;
-  font-size: 1.75rem;
+  font-size: 1.7rem;
   color: var(--color-bg);
   padding: 1.5rem 0.5rem;
 }
 
 
 .container .results h4{
-  font-size: 1.62rem;
+  font-size: 1.6rem;
   color: var(--color-bg);
   padding: 2rem 0.5rem;
   margin-top: -3.1rem;
@@ -234,7 +234,7 @@ body {
 }
 
 .codequestion-form form textarea {
-  margin-left: 52rem;
+  margin-left: 50rem;
   width: 100%;
 }
 
@@ -244,7 +244,7 @@ body {
 }
 
 .behavioural-form h3, .codequestion-form h3{
-  font-size: 1.62rem;
+  font-size: 1.5rem;
   color: var(--color-bg);
   flex: 0 0 35%;
   /*
@@ -295,23 +295,25 @@ body {
 }
 
 .codequestion-form h3{
-  font-size: 1.4rem;
+  font-size: 1.3rem;
 }
 
 .codequestion-form .testcases {
   font-size: 1.3rem;
   margin-top: 18rem;
   margin-left: -44.5rem;
+  margin-bottom: -5rem;
 }
 
 .codequestion-form .testcases h4{
   font-size: 1.5rem;
 }
 
-.codequestion .submitbtn{
-  margin-top: -5rem;
+.codequestion-form .submitbtn{
+  margin-top: -3rem;
   margin-bottom: 0.5rem;
 }
+
 
 
 
@@ -448,7 +450,7 @@ body {
     width: 80%;
   }
 
-  .codequestion .submitbtn{
+  .codequestion-form .submitbtn{
     margin-top: -2.2rem;
     margin-bottom: 10rem;
   }
