@@ -24,6 +24,7 @@ body {
   align-items: center;
   min-height: 100vh;
   background: var(--color-bg-variant);
+  margin: 0;
 }
 
 .container{
@@ -129,7 +130,7 @@ body {
   background-color: var(--color-primary);
   width: 125.3rem;
   border-radius: 0.3rem;
-  height: auto; 
+  height: 13rem;
   position: relative; 
   padding-bottom: 4rem; 
 }
@@ -323,8 +324,32 @@ body {
   margin-bottom: 0.5rem;
 }
 
+.progress-bar-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 6rem;
+}
 
+.custom-progress-bar{
+  height: 40rem;
+  width: 40rem;
 
+}
+
+.custom-progress-bar .CircularProgressbar-trail {
+    stroke-linecap: butt;
+    transform: rotate(-126deg);
+    transform-origin: center center;
+}
+
+.custom-progress-bar .CircularProgressbar-path {
+    stroke-linecap: butt;
+    transform: rotate(-126deg);
+    transform-origin: center center;
+    stroke: var(--color-bg) !important;
+
+}
 
 
 @media screen and (max-width: 2080px){
@@ -467,6 +492,12 @@ body {
   .codequestion-form .submitbtn{
     margin-top: -2.2rem;
     margin-bottom: 10rem;
+  }
+
+  .custom-progress-bar{
+    height: 30rem;
+    width: 30rem;
+  
   }
   
 
