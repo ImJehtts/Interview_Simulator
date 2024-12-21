@@ -10,8 +10,10 @@ function Job_Description({pressedNext, jobDatatoMain}){
     const [jobDescription, setJobDescription] = useState('')
     const [jobRequirements, setJobRequirements] = useState('')
     const [apirecieved, setApirecieved] = useState(0)
+    const [feedback, setFeedback] = useState('')
 
     const answers_submitted = async () =>{
+        setFeedback('Loading...')
         const data = [jobTitle, companyName, jobDescription, jobRequirements]
 
         const finalText2 = jobDescription.replace(/\s+/g, ' ').replace(/\n\s*\n/g, '\n').split('\n').map(line => line.trim()).join('\n');
@@ -30,9 +32,11 @@ function Job_Description({pressedNext, jobDatatoMain}){
             data[3] = jobRret
             jobDatatoMain(data)
             setApirecieved(1)
+            setFeedback('This is where you will see feedback when you complete a question')
         
           } catch (error) {
             console.error('Error submitting job data:', error);
+            setFeedback('Error submitting data. Try again in a seconds')
           }
     }
 
@@ -89,7 +93,7 @@ function Job_Description({pressedNext, jobDatatoMain}){
 
         <div>
             <Results pressedNext={pressedNext}   
-            rating={"You will get a rating out of /5 for your response"} feedback={"This is where you will see feedback when you complete a question<"}
+            rating={"You will get a rating out of /5 for your response"} feedback={feedback}
             cangonext={apirecieved}/>
         </div>
     </div>

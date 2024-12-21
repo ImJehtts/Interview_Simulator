@@ -181,7 +181,6 @@ const techcodequestionfeedback = async (req, res) =>{
         }
 
         const rawResponse = response.choices[0].message.content
-        console.log(rawResponse)
 
         const {feedback, rating} = JSON.parse(response.choices[0].message.content)
 

@@ -16,10 +16,11 @@ const Techincal_Code = ({pressedNext, jobData, overallRatingtoMain, skills, lang
     useEffect(() => {
         const getquestion = async () =>{
             try {
-                let prompt = `Act as an interview simulator for an techinical coding round. Based on the following details: Role Name:${jobData[0]} Company Name:${jobData[1]} Role Description:${jobData[2]} 
+                let prompt = `Act as an interview simulator for an techinical coding round. Based on the following details: Role Name:${jobData[0]} Company Name:${jobData[1]} Role Description:${jobData[3]} 
                     These leetcode topics they are comfortable with: ${skills} and this language: ${language}
                     We want it to be a leetcode-style question and we want it to be based on difficulty for the position. 
                     Intern/Junior/new grad positions should only be leetcode easy or medium. Senior positions could be medium or hard etc..
+                    Try to find more unique questions that are not super common on leetcode (but still leetcode-style. Don't give problems like two-sum). Do not give questions who's solutions requires an import of libraries.
                     STICK TO THE SKILLS/TOPICS PASSED IN. Keep it to 250 characters for the question itself.
                     Respond in this strict JSON format (no additional information or text). Dont even label it as json:
                     {"question": "The leetcode-style question based on topics/skills and position",
@@ -27,6 +28,13 @@ const Techincal_Code = ({pressedNext, jobData, overallRatingtoMain, skills, lang
                      "TestCase1Output": "The expected output for the first test case",
                      "TestCase2Input": "The input for the second test case",
                      "TestCase2Output": "The expected output for the second test case"}`
+                     
+                console.log('Sending request with data:', {
+                    jobData,
+                    prompt,
+                    skills,
+                    language
+                });
                 const response = await axios.post('http://localhost:4800/OpenAi_routes/techcodequestion', {
                     jobData: jobData,
                     prompt: prompt,
@@ -54,7 +62,7 @@ const Techincal_Code = ({pressedNext, jobData, overallRatingtoMain, skills, lang
 
 
     const answers_submit = async () =>{
-        console.log('Button clicked')
+        setFeedback('Loading...')
         const questionanswercleaned = questionanswer.replace(/\s+/g, ' ').replace(/\n\s*\n/g, '\n').split('\n').map(line => line.trim()).join('\n')
 
         setQuestionanswer(questionanswercleaned)
@@ -85,6 +93,7 @@ const Techincal_Code = ({pressedNext, jobData, overallRatingtoMain, skills, lang
             
           } catch (error) {
             console.error('Error submitting data:', error)
+            setFeedback('Error submitting data. Try again in a seconds')
           }
     }
     

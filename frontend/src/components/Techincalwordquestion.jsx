@@ -12,14 +12,15 @@ const Techincalwordquestion = ({pressedNext, jobData, overallRatingtoMain, skill
     useEffect(() => {
         const getquestion = async () => {
             try {
-                let prompt = `Act as an interview simulator for a technical round. Based on the following details: Role Name:${jobData[0]} Role Description:${jobData[2]} 
+                let prompt = `Act as an interview simulator for a technical round. Based on the following details: Role Name:${jobData[0]} Role Description:${jobData[3]} 
                 Generate a technical interview question that assesses the candidate's technical skills and problem-solving abilities. 
                 Examples include: Describe a challenging technical problem you faced and how you solved it, Can you explain the difference between a stack and a queue? When would you use each?, Explain use of async and await in JavaScript.
                 The question should be general enough to apply to various technical roles and not overly specific to any particular industry or domain.
                 The question should encourage the candidate to share a technical experience and focus on skills/frameworks mentioned in the Role description or skills given. 
                 Ensure the question is not overly focused on any single aspect. Base the difficulty of the question on the level of the role being applied for:
-                If the role is an intern position, focus on soft skills like working in teams or the languages/frameworks mentioned, avoiding hard/specific skills. 
+                If the role is an intern position, focus on soft skills like working in teams or the languages/frameworks mentioned, avoiding hard/specific skills. Maybe ask about DSA they could know from school. 
                 If the role is a senior position, you can ask more challenging questions that assess deeper technical knowledge and abilities.
+                Should be able to answer in 1 paragraph and the question should be 250 characters max. 
                 Respond in this strict JSON format (no additional information or text). Don't even label it as JSON:
                 {"question": "Your thoughtfully crafted technical question here"}`
                 const response = await axios.post('http://localhost:4800/OpenAi_routes/makequestion', {
@@ -47,6 +48,7 @@ const Techincalwordquestion = ({pressedNext, jobData, overallRatingtoMain, skill
     }, [])
 
     const answers_submitted = async () => {
+        setFeedback('Loading...')
         const questionanswercleaned = questionanswer.replace(/\s+/g, ' ').replace(/\n\s*\n/g, '\n').split('\n').map(line => line.trim()).join('\n')
         setQuestionanswer(questionanswercleaned)
 
@@ -80,6 +82,7 @@ const Techincalwordquestion = ({pressedNext, jobData, overallRatingtoMain, skill
 
         } catch (error) {
             console.error('Error submitting data:', error)
+            setFeedback('Error submitting data. Try again in a seconds')
         }
     }
 

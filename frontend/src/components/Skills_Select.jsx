@@ -35,7 +35,13 @@ const Skills_Select = ({pressedNext, skillstoMain, languagetoMain}) => {
     const handleSubmit = () => {
         skillstoMain(selectedTopics)
         languagetoMain(selectedLanguage)
-        setReadyfornext(1)
+        if (selectedTopics.length === 0 || selectedLanguage === ''){
+            setFeedback('Please select at least one topic and one language')
+            return
+        }else{
+            setReadyfornext(1)
+            setFeedback('Proceed to the next step')
+        }
     }
 
 

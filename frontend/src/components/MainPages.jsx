@@ -6,6 +6,7 @@ import Behavioural2 from './Behavioural2.jsx'
 import Skills_Select from './Skills_Select.jsx'
 import Techincal_Code from './Techinical_Code.jsx'
 import Techincalwordquestion from './Techincalwordquestion.jsx'
+import FinalResult from './Final_Result.jsx'
 
 
 
@@ -31,12 +32,10 @@ function MainPages(){
 
     const skillstoMain = (skills) => {
         setSkills(skills)
-        console.log(skills)
     }
 
     const languagetoMain = (language) => {
         setLanguage(language)
-        console.log(language)
     }
 
 
@@ -48,7 +47,7 @@ function MainPages(){
             case 3: return <Skills_Select pressedNext={pressedNext} skillstoMain={skillstoMain} languagetoMain={languagetoMain}/>
             case 4: return <Techincal_Code pressedNext={pressedNext} jobData={jobdata} overallRatingtoMain={overallRatingtoMain} skills={skills} language={language}/>
             case 5: return <Techincalwordquestion pressedNext={pressedNext} jobData={jobdata} overallRatingtoMain={overallRatingtoMain} skills={skills}/>;
-            case 6: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>;
+            case 6: return <FinalResult overallRating={overallRating}/>;
             default: return null;
     }
 }

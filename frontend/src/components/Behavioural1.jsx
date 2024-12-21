@@ -46,6 +46,7 @@ const Behavioural1 = ({pressedNext, jobData, overallRatingtoMain}) => {
 
 
     const answers_submitted = async () =>{
+        setFeedback('Loading...')
         const questionanswercleaned = questionanswer.replace(/\s+/g, ' ').replace(/\n\s*\n/g, '\n').split('\n').map(line => line.trim()).join('\n');
         /*
         .replace(/\s+/g, ' '): This replaces all sequences of one or more whitespace characters (spaces, tabs, etc.) with a single space.
@@ -87,6 +88,7 @@ const Behavioural1 = ({pressedNext, jobData, overallRatingtoMain}) => {
             
           } catch (error) {
             console.error('Error submitting job data:', error);
+            setFeedback('Error submitting data. Try again in a seconds')
           }
     }
     
