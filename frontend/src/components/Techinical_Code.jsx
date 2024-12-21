@@ -14,50 +14,57 @@ const Techincal_Code = ({pressedNext, jobData, overallRatingtoMain, skills, lang
     const [apirecieved, setApirecieved] = useState(0)
 
     useEffect(() => {
-        const getquestion = async () =>{
-            try {
-                let prompt = `Act as an interview simulator for an techinical coding round. Based on the following details: Role Name:${jobData[0]} Company Name:${jobData[1]} Role Description:${jobData[3]} 
-                    These leetcode topics they are comfortable with: ${skills} and this language: ${language}
-                    We want it to be a leetcode-style question and we want it to be based on difficulty for the position. 
-                    Intern/Junior/new grad positions should only be leetcode easy or medium. Senior positions could be medium or hard etc..
-                    Try to find more unique questions that are not super common on leetcode (but still leetcode-style. Don't give problems like two-sum). Do not give questions who's solutions requires an import of libraries.
-                    STICK TO THE SKILLS/TOPICS PASSED IN. Keep it to 250 characters for the question itself.
-                    Respond in this strict JSON format (no additional information or text). Dont even label it as json:
-                    {"question": "The leetcode-style question based on topics/skills and position",
-                     "TestCase1Input": "The input for the first test case",
-                     "TestCase1Output": "The expected output for the first test case",
-                     "TestCase2Input": "The input for the second test case",
-                     "TestCase2Output": "The expected output for the second test case"}`
-                     
-                console.log('Sending request with data:', {
-                    jobData,
-                    prompt,
-                    skills,
-                    language
-                });
-                const response = await axios.post('http://localhost:4800/OpenAi_routes/techcodequestion', {
-                    jobData: jobData,
-                    prompt: prompt,
-                    skills: skills,
-                    language: language
-                })
-                if (response.status === 200){
-                    const { question, TestCase1Input, TestCase1Output, TestCase2Input, TestCase2Output } = response.data
-                    setQuestion(question)
-                    setTestCase1Input(TestCase1Input)
-                    setTestCase1Output(TestCase1Output)
-                    setTestCase2Input(TestCase2Input)
-                    setTestCase2Output(TestCase2Output)
-
-                }else {
-                    console.error('Failed to get question: ', response.statusText)
-                }
-                
-              } catch (error) {
-                console.error('Error submitting data:', error)
-              }
-        }
-        getquestion()
+        const getquestion = async () => {
+            let attempts = 0;
+            while (question === '' && attempts < 3) {
+                try {
+                    let prompt = `Act as an interview simulator for an techinical coding round. Based on the following details: Role Name:${jobData[0]} Company Name:${jobData[1]} Role Description:${jobData[3]} 
+                        These leetcode topics they are comfortable with: ${skills} and this language: ${language}
+                        We want it to be a leetcode-style question and we want it to be based on difficulty for the position. 
+                        Intern/Junior/new grad positions should only be leetcode easy or medium. Senior positions could be medium or hard etc..
+                        Try to find more unique questions that are not super common on leetcode (but still leetcode-style. Don't give problems like two-sum). Do not give questions who's solutions requires an import of libraries.
+                        STICK TO THE SKILLS/TOPICS PASSED IN. Keep it to 250 characters for the question itself.
+                        Respond in this strict JSON format (no additional information or text). Dont even label it as json:
+                        {"question": "The leetcode-style question based on topics/skills and position",
+                         "TestCase1Input": "The input for the first test case",
+                         "TestCase1Output": "The expected output for the first test case",
+                         "TestCase2Input": "The input for the second test case",
+                         "TestCase2Output": "The expected output for the second test case"}`
+                         
+                    console.log('Sending request with data:', {
+                        jobData,
+                        prompt,
+                        skills,
+                        language
+                    });
+                    const response = await axios.post('http://localhost:4800/OpenAi_routes/techcodequestion', {
+                        jobData: jobData,
+                        prompt: prompt,
+                        skills: skills,
+                        language: language
+                    })
+                    if (response.status === 200){
+                        const { question, TestCase1Input, TestCase1Output, TestCase2Input, TestCase2Output } = response.data
+                        setQuestion(question)
+                        setTestCase1Input(TestCase1Input)
+                        setTestCase1Output(TestCase1Output)
+                        setTestCase2Input(TestCase2Input)
+                        setTestCase2Output(TestCase2Output)
+    
+                    }else {
+                        console.error('Failed to get question: ', response.statusText)
+                    }
+                    
+                  } catch (error) {
+                    console.error('Error submitting data:', error)
+                  }
+                attempts++;
+            }
+            if (question === '') {
+                setFeedback('Cannot get question, please try again later.');
+            }
+        };
+        getquestion();
       }, [])
 
 

@@ -11,35 +11,42 @@ const Behavioural1 = ({pressedNext, jobData, overallRatingtoMain}) => {
 
     useEffect(() => {
         const getquestion = async () =>{
-            try {
-                let prompt = `Act as an interview simulator for an icebreaker round. Based on the following details: Role Name:${jobData[0]} Company Name:${jobData[1]} Role Description:${jobData[2]} 
-                    Generate a behavioral interview question that is light, engaging, and non-technical. The goal is to help the interviewer get to know the candidate better
-                    but it should still be a question that could appear in an interview/
-                    Examples include: Why did you choose [Insert Company Name]?, Tell me about yourself.
-                    What's something you're particularly proud of, either personally or professionally?
-                    Think of 3 potential questions and return only one that fits best for the role. A get to know of why you would want to hire them and less like a STAR question. 
-                    Respond in this strict JSON format (no additional information or text). Dont even label it as json:
-                    {"question": "Your thoughtfully crafted icebreaker question here"}`
-                const response = await axios.post('http://localhost:4800/OpenAi_routes/makequestion', {
-                    jobData: jobData,
-                    prompt: prompt,
-                });
-                if (response.status === 200){
-                    const {question} = response.data; 
-                const formattedQuestion = question
-                .split(" ")
-                .reduce((acc, word, index) => {
-                    return acc + (index > 0 && index % 8 === 0 ? "\n" : " ") + word;
-                }, "")
-
-                    setQuestion(formattedQuestion);
-                }else {
-                    console.error('Failed to get question: ', response.statusText);
-                }
-                
-              } catch (error) {
-                console.error('Error submitting job data:', error);
-              }
+            let attempts = 0;
+            while (question === '' && attempts < 3){
+                try {
+                    let prompt = `Act as an interview simulator for an icebreaker round. Based on the following details: Role Name:${jobData[0]} Company Name:${jobData[1]} Role Description:${jobData[2]} 
+                        Generate a behavioral interview question that is light, engaging, and non-technical. The goal is to help the interviewer get to know the candidate better
+                        but it should still be a question that could appear in an interview/
+                        Examples include: Why did you choose [Insert Company Name]?, Tell me about yourself.
+                        What's something you're particularly proud of, either personally or professionally?
+                        Think of 3 potential questions and return only one that fits best for the role. A get to know of why you would want to hire them and less like a STAR question. 
+                        Respond in this strict JSON format (no additional information or text). Dont even label it as json:
+                        {"question": "Your thoughtfully crafted icebreaker question here"}`
+                    const response = await axios.post('http://localhost:4800/OpenAi_routes/makequestion', {
+                        jobData: jobData,
+                        prompt: prompt,
+                    });
+                    if (response.status === 200){
+                        const {question} = response.data; 
+                    const formattedQuestion = question
+                    .split(" ")
+                    .reduce((acc, word, index) => {
+                        return acc + (index > 0 && index % 8 === 0 ? "\n" : " ") + word;
+                    }, "")
+    
+                        setQuestion(formattedQuestion);
+                    }else {
+                        console.error('Failed to get question: ', response.statusText);
+                    }
+                    
+                  } catch (error) {
+                    console.error('Error submitting job data:', error);
+                  }
+                  attempts++;
+            }
+            if (question === '') {
+                setFeedback('Cannot get question, please try again later.');
+            }
         }
         getquestion()
       }, [])

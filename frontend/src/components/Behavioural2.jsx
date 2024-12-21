@@ -10,37 +10,44 @@ const Behavioural2 = ({pressedNext, jobData, overallRatingtoMain}) => {
     const [apirecieved, setApirecieved] = useState(0)
 
     useEffect(() => {
-        const getquestion = async () =>{
-            try {
-                let prompt = `Act as an interview simulator for a behavioral round. Based on the following details: Role Name:${jobData[0]} Company Name:${jobData[1]} 
-                Generate a behavioral interview question that follows the STAR (Situation, Task, Action, Result) model. The goal is to assess the candidate's past experiences in a structured way. 
-                Examples include: Tell me about a time when you faced a challenging situation at work and how you handled it, Describe a situation where you had to work under pressure and the steps you took to succeed.
-                Think of 3 potential questions and return only one that fits best for the role. The question should encourage the candidate to share a specific experience, focusing on their problem-solving and decision-making abilities. 
-                DDO NOT ask techinical or hard-skill questions. If technical, ask open ended questions like how would you explain a technical concept to a non-technical person.
-                Respond in this strict JSON format (no additional information or text). Don't even label it as JSON:
-                {"question": "Your thoughtfully crafted STAR behavioral question here"}` 
-                const response = await axios.post('http://localhost:4800/OpenAi_routes/makequestion', {
-                    jobData: jobData,
-                    prompt: prompt,
-                });
-                if (response.status === 200){
-                    const {question} = response.data; 
-                const formattedQuestion = question
-                .split(" ")
-                .reduce((acc, word, index) => {
-                    return acc + (index > 0 && index % 8 === 0 ? "\n" : " ") + word;
-                }, "")
-
-                    setQuestion(formattedQuestion);
-                }else {
-                    console.error('Failed to get question: ', response.statusText);
-                }
-                
-              } catch (error) {
-                console.error('Error submitting data:', error);
-              }
-        }
-        getquestion()
+        const getquestion = async () => {
+            let attempts = 0;
+            while (question === '' && attempts < 3) {
+                try {
+                    let prompt = `Act as an interview simulator for a behavioral round. Based on the following details: Role Name:${jobData[0]} Company Name:${jobData[1]} 
+                    Generate a behavioral interview question that follows the STAR (Situation, Task, Action, Result) model. The goal is to assess the candidate's past experiences in a structured way. 
+                    Examples include: Tell me about a time when you faced a challenging situation at work and how you handled it, Describe a situation where you had to work under pressure and the steps you took to succeed.
+                    Think of 3 potential questions and return only one that fits best for the role. The question should encourage the candidate to share a specific experience, focusing on their problem-solving and decision-making abilities. 
+                    DDO NOT ask techinical or hard-skill questions. If technical, ask open ended questions like how would you explain a technical concept to a non-technical person.
+                    Respond in this strict JSON format (no additional information or text). Don't even label it as JSON:
+                    {"question": "Your thoughtfully crafted STAR behavioral question here"}` 
+                    const response = await axios.post('http://localhost:4800/OpenAi_routes/makequestion', {
+                        jobData: jobData,
+                        prompt: prompt,
+                    });
+                    if (response.status === 200){
+                        const {question} = response.data; 
+                    const formattedQuestion = question
+                    .split(" ")
+                    .reduce((acc, word, index) => {
+                        return acc + (index > 0 && index % 8 === 0 ? "\n" : " ") + word;
+                    }, "")
+    
+                        setQuestion(formattedQuestion);
+                    }else {
+                        console.error('Failed to get question: ', response.statusText);
+                    }
+                    
+                  } catch (error) {
+                    console.error('Error submitting data:', error);
+                  }
+                  attempts++;
+            }
+            if (question === '') {
+                setFeedback('Cannot get question, please try again later.');
+            }
+        };
+        getquestion();
       }, [])
 
 
