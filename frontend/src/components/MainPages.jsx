@@ -5,6 +5,7 @@ import Behavioural1 from './Behavioural1'
 import Behavioural2 from './Behavioural2.jsx'
 import Skills_Select from './Skills_Select.jsx'
 import Techincal_Code from './Techinical_Code.jsx'
+import Techincalwordquestion from './Techincalwordquestion.jsx'
 
 
 
@@ -46,7 +47,7 @@ function MainPages(){
             case 2: return <Behavioural2 pressedNext={pressedNext} jobData={jobdata} overallRatingtoMain={overallRatingtoMain}/>;
             case 3: return <Skills_Select pressedNext={pressedNext} skillstoMain={skillstoMain} languagetoMain={languagetoMain}/>
             case 4: return <Techincal_Code pressedNext={pressedNext} jobData={jobdata} overallRatingtoMain={overallRatingtoMain} skills={skills} language={language}/>
-            case 5: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>;
+            case 5: return <Techincalwordquestion pressedNext={pressedNext} jobData={jobdata} overallRatingtoMain={overallRatingtoMain} skills={skills}/>;
             case 6: return <Job_Description pressedNext={pressedNext} totalSteps={totalSteps} currentStep={currentStep}/>;
             default: return null;
     }
