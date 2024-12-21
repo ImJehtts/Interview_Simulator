@@ -2,17 +2,15 @@ const express = require('express')
 const router = express.Router()
 const {
     trimJobinformation,
-    behaviouralquestion,
-    behaveQfeedback,
+    makequestion,
+    recieveQfeedback,
     techcodequestion,
     techcodequestionfeedback
 } = require('../controllers/OpenAI_controllers')
 
-
-
 router.patch('/trimjobinfo', trimJobinformation)
-router.post('/behaviouralquestion', behaviouralquestion)
-router.post('/behaveQfeedback', behaveQfeedback)
+router.post('/makequestion', makequestion)
+router.post('/recieveQfeedback', recieveQfeedback)
 router.post('/techcodequestion', techcodequestion)
 router.post('/techcodequestionfeedback', techcodequestionfeedback)
 

@@ -18,7 +18,7 @@ const Behavioural2 = ({pressedNext, jobData, overallRatingtoMain}) => {
                 Think of 3 potential questions and return only one that fits best for the role. The question should encourage the candidate to share a specific experience, focusing on their problem-solving and decision-making abilities. 
                 Respond in this strict JSON format (no additional information or text). Don't even label it as JSON:
                 {"question": "Your thoughtfully crafted STAR behavioral question here"}` 
-                const response = await axios.post('http://localhost:4800/OpenAi_routes/behaviouralquestion', {
+                const response = await axios.post('http://localhost:4800/OpenAi_routes/makequestion', {
                     jobData: jobData,
                     prompt: prompt,
                 });
@@ -59,7 +59,7 @@ const Behavioural2 = ({pressedNext, jobData, overallRatingtoMain}) => {
             Provide 2-4 lines of feedback and give a rating to one decimal point out of 5. Respond strictly in this JSON format (no additional information or text). Don't even label it as json:
             {"feedback": "Your feedback here", "rating": "Your rating here (example: 3.5/5)"}`
             
-            const response = await axios.post('http://localhost:4800/OpenAi_routes/behaveQfeedback', {
+            const response = await axios.post('http://localhost:4800/OpenAi_routes/recieveQfeedback', {
                 question:question,
                 questionanswer:questionanswer,
                 jobData: jobData,
@@ -90,7 +90,7 @@ const Behavioural2 = ({pressedNext, jobData, overallRatingtoMain}) => {
 
     return (
         <div>
-            <div className='behavioural-form'>
+            <div className='wordquestions-form'>
                 <h2>Behavioural #2</h2>
                 <h3>
                 Question: 

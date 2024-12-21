@@ -20,7 +20,7 @@ const Techincal_Code = ({pressedNext, jobData, overallRatingtoMain, skills, lang
                     These leetcode topics they are comfortable with: ${skills} and this language: ${language}
                     We want it to be a leetcode-style question and we want it to be based on difficulty for the position. 
                     Intern/Junior/new grad positions should only be leetcode easy or medium. Senior positions could be medium or hard etc..
-                    STICK TO THE SKILLS/TOPICS PASSED IN. Keep it to 250 characters 
+                    STICK TO THE SKILLS/TOPICS PASSED IN. Keep it to 250 characters for the question itself.
                     Respond in this strict JSON format (no additional information or text). Dont even label it as json:
                     {"question": "The leetcode-style question based on topics/skills and position",
                      "TestCase1Input": "The input for the first test case",

@@ -8,10 +8,10 @@ const Results = ({pressedNext, rating, feedback, cangonext}) => {
         <div className='results_5'>
             <h3>Results: {rating}</h3>
         </div>
-        <div className='results_reedback'>
+        <div className='results_feedback'>
             <h4>Feedback: {feedback}</h4>
         </div>
-        <div> 
+        <div className='results_button'> 
         <button className={`${cangonext === 0 ? "disabled":"btn"}`} onClick={onClickfunction}>Next</button>
         </div>
     </div>

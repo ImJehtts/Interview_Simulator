@@ -59,16 +59,16 @@ const trimJobinformation  = async (req, res) =>{
     }
 }
 
-    const behaviouralquestion = async (req, res) =>{
-        try {
-            const {jobData, prompt} = req.body
+const makequestion = async (req, res) =>{
+    try {
+        const {jobData, prompt} = req.body
     
-            if (!jobData || jobData.length < 4) {
-                return res.status(400).json({ error: 'Invalid jobData format.' })
-            }
-            if (!prompt) {
-                return res.status(400).json({ error: 'Invalid prompt.' })
-            }
+        if (!jobData || jobData.length < 4) {
+            return res.status(400).json({ error: 'Invalid jobData format.' })
+        }
+        if (!prompt) {
+            return res.status(400).json({ error: 'Invalid prompt.' })
+        }
 
         const response = await openai.chat.completions.create({
             messages: [{ role: 'user', content: prompt }],
@@ -91,14 +91,14 @@ const trimJobinformation  = async (req, res) =>{
     
     
         res.status(200).json({question})
-        } catch (error) {
-            console.error(error)
-            res.status(500).json({error: error.message})
-        }
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({error: error.message})
+    }
 }
 
 
-const behaveQfeedback = async (req, res) =>{
+const recieveQfeedback = async (req, res) =>{
     try {
         const {question, questionanswer, jobData, prompt} = req.body
 
@@ -194,8 +194,8 @@ const techcodequestionfeedback = async (req, res) =>{
 
 module.exports = {
     trimJobinformation,
-    behaviouralquestion,
-    behaveQfeedback,
+    makequestion,
+    recieveQfeedback,
     techcodequestion,
     techcodequestionfeedback
 }
