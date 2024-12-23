@@ -8,7 +8,7 @@ const {
     techcodequestionfeedback
 } = require('../controllers/OpenAI_controllers')
 
-router.post('/trimjobinfo', trimJobinformation)
+router.patch('/trimjobinfo', trimJobinformation)
 router.post('/makequestion', makequestion)
 router.post('/recieveQfeedback', recieveQfeedback)
 router.post('/techcodequestion', techcodequestion)
