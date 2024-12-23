@@ -24,7 +24,7 @@ function Job_Description({pressedNext, jobDatatoMain}){
         data[3] = finalText3
 
         try {
-            const response = await axios.patch(`${backendUrl}/OpenAi_routes/trimjobinfo`, {
+            const response = await axios.post(`${backendUrl}/OpenAi_routes/trimjobinfo`, {
                 jobData: data,
             });
 
