@@ -8,7 +8,7 @@ const app = express()
 
 
 app.use(express.json())
-app.use(cors({origin: process.env.FRONT_END_PORT,  methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE']}))
+app.use(cors({origin: process.env.FRONT_END_PORT,  methods: ['GET', 'POST'], credentials: true}))
 app.use((req, res, next) => {
     next()
 })
