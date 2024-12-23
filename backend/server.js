@@ -15,4 +15,9 @@ app.use((req, res, next) => {
 
 app.use('/OpenAi_routes', OpenAi_routes)
 
-module.exports = app
+
+const PORT = process.env.PORT;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
