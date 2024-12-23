@@ -8,11 +8,13 @@ const Behavioural1 = ({pressedNext, jobData, overallRatingtoMain}) => {
     const [ratingnumber, setRatingnumber] = useState('0.0/5')
     const [feedback, setFeedback] = useState('')
     const [apirecieved, setApirecieved] = useState(0)
+    const backendUrl = import.meta.env.VITE_BACK_END_PORT
 
     useEffect(() => {
         const getquestion = async () =>{
-            let attempts = 0;
-            while (question === '' && attempts < 3){
+            let attempts = 0
+            let questionfetched = false
+            while (!questionfetched && attempts < 3){
                 try {
                     let prompt = `Act as an interview simulator for an icebreaker round. Based on the following details: Role Name:${jobData[0]} Company Name:${jobData[1]} Role Description:${jobData[2]} 
                         Generate a behavioral interview question that is light, engaging, and non-technical. The goal is to help the interviewer get to know the candidate better
@@ -22,7 +24,7 @@ const Behavioural1 = ({pressedNext, jobData, overallRatingtoMain}) => {
                         Think of 3 potential questions and return only one that fits best for the role. A get to know of why you would want to hire them and less like a STAR question. 
                         Respond in this strict JSON format (no additional information or text). Dont even label it as json:
                         {"question": "Your thoughtfully crafted icebreaker question here"}`
-                    const response = await axios.post('http://localhost:4800/OpenAi_routes/makequestion', {
+                    const response = await axios.post(`${backendUrl}/OpenAi_routes/makequestion`, {
                         jobData: jobData,
                         prompt: prompt,
                     });
@@ -34,7 +36,8 @@ const Behavioural1 = ({pressedNext, jobData, overallRatingtoMain}) => {
                         return acc + (index > 0 && index % 8 === 0 ? "\n" : " ") + word;
                     }, "")
     
-                        setQuestion(formattedQuestion);
+                        setQuestion(formattedQuestion)
+                        questionfetched = true
                     }else {
                         console.error('Failed to get question: ', response.statusText);
                     }
@@ -44,7 +47,7 @@ const Behavioural1 = ({pressedNext, jobData, overallRatingtoMain}) => {
                   }
                   attempts++;
             }
-            if (question === '') {
+            if (!questionfetched) {
                 setFeedback('Cannot get question, please try again later.');
             }
         }
@@ -76,7 +79,7 @@ const Behavioural1 = ({pressedNext, jobData, overallRatingtoMain}) => {
             Provide 2-4 lines of feedback and give a rating to one decimal point out of 5. Respond strictly in this JSON format (no additional information or text). Dont even label it as json:
             {"feedback": "Your feedback here", "rating": "Your rating here (example: 3.5/5)"}`
             
-            const response = await axios.post('http://localhost:4800/OpenAi_routes/recieveQfeedback', {
+            const response = await axios.post(`${backendUrl}/OpenAi_routes/recieveQfeedback`, {
                 question:question,
                 questionanswer:questionanswer,
                 jobData: jobData,
@@ -119,8 +122,8 @@ const Behavioural1 = ({pressedNext, jobData, overallRatingtoMain}) => {
                 <form> 
                 <textarea type='text'
                 name="behaviouralanswer"
-                maxLength='2000'
-                placeholder="Please Answer the question on the left. You are only allowed 2000 characters " 
+                maxLength='3000'
+                placeholder="Please Answer the question on the left. You are only allowed 3000 characters " 
                 required onChange={handleChange}/>
             </form>
             </div>

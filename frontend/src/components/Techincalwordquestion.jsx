@@ -8,11 +8,13 @@ const Techincalwordquestion = ({pressedNext, jobData, overallRatingtoMain, skill
     const [ratingnumber, setRatingnumber] = useState('0.0/5')
     const [feedback, setFeedback] = useState('')
     const [apirecieved, setApirecieved] = useState(0)
+    const backendUrl = import.meta.env.VITE_BACK_END_PORT
 
     useEffect(() => {
         const getquestion = async () => {
-            let attempts = 0;
-            while (question === '' && attempts < 3) {
+            let attempts = 0
+            let questionfetched = false
+            while (!questionfetched && attempts < 3) {
                 try {
                     let prompt = `Act as an interview simulator for a technical round. Based on the following details: Role Name:${jobData[0]} Role Description:${jobData[3]} 
                     Generate a technical interview question that assesses the candidate's technical skills and problem-solving abilities. 
@@ -25,7 +27,8 @@ const Techincalwordquestion = ({pressedNext, jobData, overallRatingtoMain, skill
                     Should be able to answer in 1 paragraph and the question should be 250 characters max. 
                     Respond in this strict JSON format (no additional information or text). Don't even label it as JSON:
                     {"question": "Your thoughtfully crafted technical question here"}`
-                    const response = await axios.post('http://localhost:4800/OpenAi_routes/makequestion', {
+                    console.log(prompt)
+                    const response = await axios.post(`${backendUrl}/OpenAi_routes/makequestion`, {
                         jobData: jobData,
                         prompt: prompt,
                     })
@@ -38,6 +41,7 @@ const Techincalwordquestion = ({pressedNext, jobData, overallRatingtoMain, skill
                             }, "")
     
                         setQuestion(formattedQuestion)
+                        questionfetched = true
                     } else {
                         console.error('Failed to get question: ', response.statusText)
                     }
@@ -47,7 +51,7 @@ const Techincalwordquestion = ({pressedNext, jobData, overallRatingtoMain, skill
                 }
                 attempts++;
             }
-            if (question === '') {
+            if (!questionfetched) {
                 setFeedback('Cannot get question, please try again later.');
             }
         }
@@ -70,7 +74,7 @@ const Techincalwordquestion = ({pressedNext, jobData, overallRatingtoMain, skill
             Provide 2-4 lines of feedback and give a rating to one decimal point out of 5. Respond strictly in this JSON format (no additional information or text). Don't even label it as json:
             {"feedback": "Your feedback here", "rating": "Your rating here (example: 3.5/5)"}`
 
-            const response = await axios.post('http://localhost:4800/OpenAi_routes/recieveQfeedback', {
+            const response = await axios.post(`${backendUrl}/OpenAi_routes/recieveQfeedback`, {
                 question: question,
                 questionanswer: questionanswer,
                 jobData: jobData,
@@ -111,8 +115,8 @@ const Techincalwordquestion = ({pressedNext, jobData, overallRatingtoMain, skill
                 <form>
                     <textarea type='text'
                         name="technicalanswer"
-                        maxLength='2500'
-                        placeholder="Please Answer the question on the left. You are only allowed 2500 characters."
+                        maxLength='3000'
+                        placeholder="Please Answer the question on the left. You are only allowed 3000 characters."
                         required onChange={handleChange} />
                 </form>
             </div>

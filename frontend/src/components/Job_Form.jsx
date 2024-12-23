@@ -10,7 +10,8 @@ function Job_Description({pressedNext, jobDatatoMain}){
     const [jobDescription, setJobDescription] = useState('')
     const [jobRequirements, setJobRequirements] = useState('')
     const [apirecieved, setApirecieved] = useState(0)
-    const [feedback, setFeedback] = useState('')
+    const [feedback, setFeedback] = useState('(Please type out all responses. Do not use autofill)')
+    const backendUrl = import.meta.env.VITE_BACK_END_PORT
 
     const answers_submitted = async () =>{
         setFeedback('Loading...')
@@ -23,7 +24,7 @@ function Job_Description({pressedNext, jobDatatoMain}){
         data[3] = finalText3
 
         try {
-            const response = await axios.patch('http://localhost:4800/OpenAi_routes/trimjobinfo', {
+            const response = await axios.patch(`${backendUrl}/OpenAi_routes/trimjobinfo`, {
                 jobData: data,
             });
 
@@ -74,13 +75,13 @@ function Job_Description({pressedNext, jobDatatoMain}){
                 <textarea type='text'
                 name="jobDescription"
                 maxLength='2000'
-                placeholder="What is the Job Description (eg. The 'What we do' and/or 'What you will do' sections). You are only allowed 700 characters" 
+                placeholder="What is the Job Description (eg. The 'What we do' and/or 'What you will do' sections). You are only allowed 2000 characters" 
                 className="description_section" 
                 required onChange={handleChange}/>
                 <textarea type='text'
                 name="jobRequirements"
                 maxLength='2000'
-                placeholder="What are the Job Requirments (eg. Skills/Requirments section (Python, Bachelors, ...)).. You are only allowed 700 characters " 
+                placeholder="What are the Job Requirments (eg. Skills/Requirments section (Python, Bachelors, ...)).. You are only allowed 2000 characters " 
                 className="requirments_section" 
                 required onChange={handleChange}/>
             </form>

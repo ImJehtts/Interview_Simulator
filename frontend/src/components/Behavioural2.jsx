@@ -8,11 +8,13 @@ const Behavioural2 = ({pressedNext, jobData, overallRatingtoMain}) => {
     const [ratingnumber, setRatingnumber] = useState('0.0/5')
     const [feedback, setFeedback] = useState('')
     const [apirecieved, setApirecieved] = useState(0)
+    const backendUrl = import.meta.env.VITE_BACK_END_PORT
 
     useEffect(() => {
         const getquestion = async () => {
             let attempts = 0;
-            while (question === '' && attempts < 3) {
+            let questionfetched = false
+            while (!questionfetched && attempts < 3) {
                 try {
                     let prompt = `Act as an interview simulator for a behavioral round. Based on the following details: Role Name:${jobData[0]} Company Name:${jobData[1]} 
                     Generate a behavioral interview question that follows the STAR (Situation, Task, Action, Result) model. The goal is to assess the candidate's past experiences in a structured way. 
@@ -21,7 +23,7 @@ const Behavioural2 = ({pressedNext, jobData, overallRatingtoMain}) => {
                     DDO NOT ask techinical or hard-skill questions. If technical, ask open ended questions like how would you explain a technical concept to a non-technical person.
                     Respond in this strict JSON format (no additional information or text). Don't even label it as JSON:
                     {"question": "Your thoughtfully crafted STAR behavioral question here"}` 
-                    const response = await axios.post('http://localhost:4800/OpenAi_routes/makequestion', {
+                    const response = await axios.post(`${backendUrl}/OpenAi_routes/makequestion`, {
                         jobData: jobData,
                         prompt: prompt,
                     });
@@ -33,7 +35,8 @@ const Behavioural2 = ({pressedNext, jobData, overallRatingtoMain}) => {
                         return acc + (index > 0 && index % 8 === 0 ? "\n" : " ") + word;
                     }, "")
     
-                        setQuestion(formattedQuestion);
+                        setQuestion(formattedQuestion)
+                        questionfetched = true
                     }else {
                         console.error('Failed to get question: ', response.statusText);
                     }
@@ -43,7 +46,7 @@ const Behavioural2 = ({pressedNext, jobData, overallRatingtoMain}) => {
                   }
                   attempts++;
             }
-            if (question === '') {
+            if (!questionfetched) {
                 setFeedback('Cannot get question, please try again later.');
             }
         };
@@ -69,7 +72,7 @@ const Behavioural2 = ({pressedNext, jobData, overallRatingtoMain}) => {
             Provide 2-4 lines of feedback and give a rating to one decimal point out of 5. Respond strictly in this JSON format (no additional information or text). Don't even label it as json:
             {"feedback": "Your feedback here", "rating": "Your rating here (example: 3.5/5)"}`
             
-            const response = await axios.post('http://localhost:4800/OpenAi_routes/recieveQfeedback', {
+            const response = await axios.post(`${backendUrl}/OpenAi_routes/recieveQfeedback`, {
                 question:question,
                 questionanswer:questionanswer,
                 jobData: jobData,
@@ -112,8 +115,8 @@ const Behavioural2 = ({pressedNext, jobData, overallRatingtoMain}) => {
                 <form> 
                 <textarea type='text'
                 name="behaviouralanswer"
-                maxLength='2500'
-                placeholder="Please Answer the question on the left. You are only allowed 2500 characters (Follow the STAR model)" 
+                maxLength='3000'
+                placeholder="Please Answer the question on the left. You are only allowed 3000 characters (Hint: Follow the STAR model)" 
                 required onChange={handleChange}/>
             </form>
             </div>

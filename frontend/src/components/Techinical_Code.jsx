@@ -12,11 +12,13 @@ const Techincal_Code = ({pressedNext, jobData, overallRatingtoMain, skills, lang
     const [ratingnumber, setRatingnumber] = useState('0.0/5')
     const [feedback, setFeedback] = useState('')
     const [apirecieved, setApirecieved] = useState(0)
+    const backendUrl = import.meta.env.VITE_BACK_END_PORT
 
     useEffect(() => {
-        const getquestion = async () => {
-            let attempts = 0;
-            while (question === '' && attempts < 3) {
+        const getquestion = async () =>{
+            let attempts = 0
+            let questionfetched = false
+            while (!questionfetched && attempts < 3) {
                 try {
                     let prompt = `Act as an interview simulator for an techinical coding round. Based on the following details: Role Name:${jobData[0]} Company Name:${jobData[1]} Role Description:${jobData[3]} 
                         These leetcode topics they are comfortable with: ${skills} and this language: ${language}
@@ -37,7 +39,7 @@ const Techincal_Code = ({pressedNext, jobData, overallRatingtoMain, skills, lang
                         skills,
                         language
                     });
-                    const response = await axios.post('http://localhost:4800/OpenAi_routes/techcodequestion', {
+                    const response = await axios.post(`${backendUrl}/OpenAi_routes/techcodequestion`, {
                         jobData: jobData,
                         prompt: prompt,
                         skills: skills,
@@ -50,6 +52,7 @@ const Techincal_Code = ({pressedNext, jobData, overallRatingtoMain, skills, lang
                         setTestCase1Output(TestCase1Output)
                         setTestCase2Input(TestCase2Input)
                         setTestCase2Output(TestCase2Output)
+                        questionfetched = true
     
                     }else {
                         console.error('Failed to get question: ', response.statusText)
@@ -58,13 +61,13 @@ const Techincal_Code = ({pressedNext, jobData, overallRatingtoMain, skills, lang
                   } catch (error) {
                     console.error('Error submitting data:', error)
                   }
-                attempts++;
-            }
-            if (question === '') {
+                  attempts++;
+                }
+                if (!questionfetched) {
                 setFeedback('Cannot get question, please try again later.');
             }
-        };
-        getquestion();
+        }
+        getquestion()
       }, [])
 
 
@@ -84,7 +87,7 @@ const Techincal_Code = ({pressedNext, jobData, overallRatingtoMain, skills, lang
             Provide 2-4 lines of feedback and give a rating to one decimal point out of 5. Respond strictly in this JSON format (no additional information or text). Dont even label it as json:
             {"feedback": "Your feedback here", "rating": "Your rating here (example: 3.5/5)"}`
             
-            const response = await axios.post('http://localhost:4800/OpenAi_routes/techcodequestionfeedback', {
+            const response = await axios.post(`${backendUrl}/OpenAi_routes/techcodequestionfeedback`, {
                 prompt: prompt,
             })
             if (response.status === 200){
@@ -135,7 +138,7 @@ const Techincal_Code = ({pressedNext, jobData, overallRatingtoMain, skills, lang
                 <textarea type='text'
                 name="codequestionsanswer"
                 maxLength='3000'
-                placeholder="Please Answer the question on the left" 
+                placeholder="Please Answer the question on the left. You are only allowed 3000 characters" 
                 required onChange={handleChange}/>
             </form>
             </div>
