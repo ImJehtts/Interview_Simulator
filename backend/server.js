@@ -13,12 +13,6 @@ app.use((req, res, next) => {
     next()
 })
 
-app.get('/', (req, res) => {
-    res.send('Hello World')
-})
-
 app.use('/OpenAi_routes', OpenAi_routes)
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server is running `)
-})
+module.exports = app
