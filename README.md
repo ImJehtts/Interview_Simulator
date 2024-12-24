@@ -27,6 +27,12 @@ In this project, I used ReactJS and NodeJS with OpenAI's API to recreate create 
      "version": "0.1.0",
      "private": true,
     ```
+
+    Create a .env file in frontend folder. Fill it out as such:
+     ```
+     VITE_BACK_END_PORT = http://localhost:4000
+     ```
+     Make sure the port number in the backend env file called "PORT" and in the frontend env file match. 
  4. Open two terminals. In one, cd to the frontend
      ```
      cd frontend
